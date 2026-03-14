@@ -6,10 +6,11 @@ export default async function middleware(req) {
   const query = url.search || '';
 
   let targetBase;
-  if (targetPath.startsWith('/v1/')) {
-    targetBase = 'https://api.openai.com';
-  } else {
+  const hasAnthropicKey = req.headers.has('x-api-key');
+  if (hasAnthropicKey) {
     targetBase = 'https://api.anthropic.com';
+  } else {
+    targetBase = 'https://api.openai.com';
   }
 
   const targetUrl = targetBase + targetPath + query;
