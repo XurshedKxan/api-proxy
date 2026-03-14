@@ -1,6 +1,6 @@
-export const config = { runtime: 'edge' };
+export const config = { matcher: '/:path*' };
 
-export default async function handler(req) {
+export default async function middleware(req) {
   const url = new URL(req.url);
   const targetPath = url.pathname;
   const query = url.search || '';
@@ -23,6 +23,7 @@ export default async function handler(req) {
     'x-vercel-ip-timezone', 'x-vercel-proxy-signature',
     'x-vercel-proxy-signature-ts', 'x-forwarded-host',
     'x-forwarded-proto', 'x-vercel-id', 'x-vercel-trace',
+    'x-middleware-invoke', 'x-middleware-next',
   ]);
 
   const headers = new Headers();
